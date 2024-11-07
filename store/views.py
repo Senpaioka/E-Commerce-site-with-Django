@@ -4,6 +4,7 @@ from category.models import Categories
 
 # Create your views here.
 
+# store page
 def store_page_view(request, category_slug=None):
 
     html_template_name = 'store/store.html'    
@@ -23,6 +24,30 @@ def store_page_view(request, category_slug=None):
     context = {
         'products': all_product,
         'count': product_count,
+    }
+
+    return render(request, html_template_name, context)
+
+
+
+
+
+
+
+
+
+# product details
+def product_details_page(request, category_slug, selected_product_slug):
+    
+    html_template_name = 'store/product_details.html'
+
+    try:
+        single_product = Product.objects.get(category__slug=category_slug, product_slug=selected_product_slug)
+    except Exception as err:
+        raise err
+
+    context = {
+        'product_info' : single_product,
     }
 
     return render(request, html_template_name, context)
