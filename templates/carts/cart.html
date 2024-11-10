@@ -27,12 +27,14 @@
 </thead>
 <tbody>
 
+{% for info in cart_product_info %}
+	
 <tr>
 	<td>
 		<figure class="itemside align-items-center">
-			<div class="aside"><img src="./images/items/9.jpg" class="img-sm"></div>
+			<div class="aside"><img src="{{ info.product.product_img.url }}" class="img-sm"></div>
 			<figcaption class="info">
-				<a href="#" class="title text-dark">Logitec headset for gaming</a>
+				<a href="#" class="title text-dark">{{ info.product.product_name }}</a>
 				<p class="small text-muted">Version: CUH-ZCT2E  <br> Brand: Sony</p>
 			</figcaption>
 		</figure>
@@ -42,25 +44,28 @@
 					<div class="col"> 
 						<div class="input-group input-spinner">
 							<div class="input-group-prepend">
-							<button class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </button>
+							<a href="{% url 'carts:remove_cart' info.product.id %}" class="btn btn-light" type="button" id="button-plus"> <i class="fa fa-minus"></i> </a>
 							</div>
-							<input type="text" class="form-control"  value="1">
+							<input type="text" class="form-control"  value="{{ info.quantity }}">
 							<div class="input-group-append">
-							<button class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-plus"></i> </button>
+							<a href="{% url 'carts:add_cart' info.product.id %}" class="btn btn-light" type="button" id="button-minus"> <i class="fa fa-plus"></i> </a>
 							</div>
 						</div> <!-- input-group.// -->
 					</div> <!-- col.// -->
 	</td>
 	<td> 
 		<div class="price-wrap"> 
-			<var class="price">$98.00</var> 
-			<small class="text-muted"> $578.00 each</small> 
+			<var class="price">${{ info.sub_total }}</var> 
+			<small class="text-muted"> ${{ info.product.product_price }} each</small> 
 		</div> <!-- price-wrap .// -->
 	</td>
 	<td class="text-right"> 
-		<a href="" class="btn btn-danger"> Remove</a>
+		<a href="{% url 'carts:delete_cart' info.product.id %}" class="btn btn-danger"> Remove</a>
 	</td>
 </tr>
+
+{% endfor %}
+
 </tbody>
 </table>
 </div> <!-- card.// -->
@@ -72,15 +77,15 @@
 		<div class="card-body">
 			<dl class="dlist-align">
 			  <dt>Total price:</dt>
-			  <dd class="text-right">$69.97</dd>
+			  <dd class="text-right">${{ total_price }}</dd>
 			</dl>
 			<dl class="dlist-align">
 			  <dt>Tax:</dt>
-			  <dd class="text-right"> $10.00</dd>
+			  <dd class="text-right"> ${{ tax }}</dd>
 			</dl>
 			<dl class="dlist-align">
 			  <dt>Total:</dt>
-			  <dd class="text-right text-dark b"><strong>$59.97</strong></dd>
+			  <dd class="text-right text-dark b"><strong>${{ total_pay }}</strong></dd>
 			</dl>
 			<hr>
 			<p class="text-center mb-3">
