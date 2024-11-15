@@ -13,6 +13,18 @@
 
 <!-- ============================ COMPONENT 1 ================================= -->
 
+{% if not cart_product_info %}
+
+<h3>Your Shopping Cart Is Empty</h3>
+
+<br>
+
+<div class='text-center'>
+	<a href="{% url 'store:store_page' %}" class="btn btn-primary">Continue Shopping</a>
+</div>
+
+{% else %}
+
 <div class="row">
 	<aside class="col-lg-9">
 <div class="card">
@@ -34,7 +46,7 @@
 		<figure class="itemside align-items-center">
 			<div class="aside"><img src="{{ info.product.product_img.url }}" class="img-sm"></div>
 			<figcaption class="info">
-				<a href="#" class="title text-dark">{{ info.product.product_name }}</a>
+				<a href="{{ info.product.get_urls }}" class="title text-dark">{{ info.product.product_name }}</a>
 				<p class="small text-muted">Version: CUH-ZCT2E  <br> Brand: Sony</p>
 			</figcaption>
 		</figure>
@@ -92,7 +104,7 @@
 				<img src="{% static "images/misc/payments.png" %}" height="26">
 			</p>
 			<a href="./place-order.html" class="btn btn-primary btn-block"> Checkout </a>
-			<a href="./store.html" class="btn btn-light btn-block">Continue Shopping</a>
+			<a href="{% url 'store:store_page' %}" class="btn btn-light btn-block">Continue Shopping</a>
 		</div> <!-- card-body.// -->
 		</div> <!-- card.// -->
 
@@ -100,6 +112,8 @@
 
 
 </div> <!-- row.// -->
+
+{% endif %}
 <!-- ============================ COMPONENT 1 END .// ================================= -->
 
 </div> <!-- container .//  -->

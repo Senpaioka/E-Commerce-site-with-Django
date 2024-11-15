@@ -1,6 +1,8 @@
 from django.shortcuts import render, get_object_or_404
 from store.models import Product
 from category.models import Categories
+from carts.models import CartItem
+from utils.user_session import _user_session_id
 
 # Create your views here.
 
@@ -43,11 +45,13 @@ def product_details_page(request, category_slug, selected_product_slug):
 
     try:
         single_product = Product.objects.get(category__slug=category_slug, product_slug=selected_product_slug)
+        cart_empty_or_not = CartItem.objects.filter(cart__cart_id=_user_session_id(request), product=single_product).exists()
     except Exception as err:
         raise err
 
     context = {
         'product_info' : single_product,
+        'is_cart_available': cart_empty_or_not,
     }
 
     return render(request, html_template_name, context)
