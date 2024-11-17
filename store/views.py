@@ -76,6 +76,7 @@ def product_details_page(request, category_slug, selected_product_slug):
 
 
 
+
 def search_functionality_view(request):
 
     html_template_name = 'store/store.html'

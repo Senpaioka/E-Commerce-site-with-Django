@@ -4,4 +4,10 @@ from carts.models import Cart, CartItem
 
 
 admin.site.register(Cart)
-admin.site.register(CartItem)
+
+
+class CartItemAdmin(admin.ModelAdmin):
+    list_display = ['product', 'cart' ,'quantity']
+
+
+admin.site.register(CartItem, CartItemAdmin)

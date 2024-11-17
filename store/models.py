@@ -28,4 +28,56 @@ class Product(models.Model):
         return self.product_name
     
 
+
+
+
+
+
+
+
+
+
+
+
+class VariationManager(models.Manager):
+
+    def color_selected(self):
+        return super(VariationManager, self).filter(product_variation='color', is_available=True)
+    
+
+    def size_selected(self):
+        return super(VariationManager, self).filter(product_variation='size', is_available=True)
+
+
+
+
+PRODUCT_VARIATIONS = [
+    ('color', 'color'),
+    ('size', 'size'),
+]
+
+class ProductVariation(models.Model):
+
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product_variation = models.CharField(max_length=10, choices=PRODUCT_VARIATIONS)
+    variation_value = models.CharField(max_length=50)
+    is_available = models.BooleanField(default=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+
+    # set custom manager
+    objects = VariationManager()
+
+
+    def __str__(self):
+        return self.product.product_name
+
+    
+
+
+
+
+    
+
+
     
